@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_page_attachments().
+ */
+function cm_data_layer_page_attachments(array &$page) {
+  $page['#attached']['library'][] = "cm_data_layer/data_layer_push_command";
+}

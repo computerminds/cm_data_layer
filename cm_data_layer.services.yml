@@ -1,0 +1,10 @@
+services:
+  cm_data_layer.data_layer:
+    class: Drupal\cm_data_layer\DataLayer
+    arguments: ['@tempstore.private', '@session_manager']
+  cm_data_layer.data_layer_subscriber:
+    class: Drupal\cm_data_layer\EventSubscriber\DataLayerSubscriber
+    arguments: ['@cm_data_layer.data_layer']
+    tags:
+      - { name: event_subscriber }
+

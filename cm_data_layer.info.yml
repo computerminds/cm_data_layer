@@ -1,0 +1,8 @@
+name: ComputerMinds Data Layer
+type: module
+description: 'Provides a mechanism for populating the client side data layer'
+package: ComputerMinds
+core_version_requirement: ^8 || ^9
+
+version: '8.x-1.0'
+project: cm_data_layer

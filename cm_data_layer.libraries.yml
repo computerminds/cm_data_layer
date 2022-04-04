@@ -1,0 +1,16 @@
+data_layer_push_command:
+  version: 1.x
+  js:
+    js/data_layer_push_command.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.ajax
+
+data_layer_push_behavior:
+  version: 1.x
+  js:
+    js/data_layer_push_behavior.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
