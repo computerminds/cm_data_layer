@@ -6,3 +6,10 @@
 function cm_data_layer_page_attachments(array &$page) {
   $page['#attached']['library'][] = "cm_data_layer/data_layer_push_command";
 }
+
+/**
+ * Implements hook_user_login().
+ */
+function cm_data_layer_user_login($account) {
+  \Drupal::service('cm_data_layer.data_layer')->migrateAnonData();
+}

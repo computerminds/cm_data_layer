@@ -2,6 +2,7 @@
 
 namespace Drupal\cm_data_layer;
 
+use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\Session\SessionManager;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 
@@ -136,6 +137,38 @@ class DataLayer implements DataLayerInterface {
     }
     catch (\Exception $ex) {
       // No action necessary.
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function migrateAnonData() {
+    $account_switcher = \Drupal::service('account_switcher');
+    // We use PrivateTempStore, which defines 'owners' of the data as either the
+    // session ID or the user ID if logged in. Our method is called when the
+    // current session is moving from a logged out to logged in context, thus we
+    // briefly switch back to the anon user, grab any data we might have stored
+    // and then after switching back to the user account we're now logging into
+    // we store it again. This ensures that our data survives the login. It's
+    // entirely possible that we'll have to revisit this code if
+    // https://www.drupal.org/project/drupal/issues/3015530 ever lands.
+    try {
+      // Pretend like we're not logged in.
+      $account_switcher->switchTo(new AnonymousUserSession());
+      // Get the data, note that this also implicitly flushes it.
+      $previous_data = $this->getData();
+      self::$data = [];
+    }
+    finally {
+      $account_switcher->switchBack();
+    }
+
+    if (!empty($previous_data)) {
+      // There is some data. Migrate it over to the new PrivateTempStore owner.
+      foreach ($previous_data as $item) {
+        $this->addSessionData($item);
+      }
     }
   }
 

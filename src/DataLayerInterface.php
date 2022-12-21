@@ -20,4 +20,9 @@ interface DataLayerInterface {
    */
   public function getData();
 
+  /**
+   * Migrate any anonymously stored data into the session.
+   */
+  public function migrateAnonData();
+
 }
