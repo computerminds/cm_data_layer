@@ -1,0 +1,8 @@
+{
+  "name": "computerminds/cm_data_layer",
+  "description": "This module provides a messenger-like service for pushing events/data into the client side data layer.",
+  "type": "drupal-module",
+  "homepage": "http://www.computerminds.co.uk",
+  "minimum-stability": "dev",
+  "require": { }
+}
